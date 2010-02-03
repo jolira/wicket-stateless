@@ -4,8 +4,7 @@ package com.google.code.joliratools;
  * 
  */
 
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxEventBehavior;
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.calldecorator.CancelEventIfNoAjaxDecorator;
@@ -26,24 +25,24 @@ public abstract class StatelessAjaxFallbackLink<T> extends Link<T> implements
     private static final long serialVersionUID = -133600842398684777L;
 
     public StatelessAjaxFallbackLink(final String id) {
-        this(id, null);
+        this(id, null, null);
     }
 
     public StatelessAjaxFallbackLink(final String id, final IModel<T> model) {
+        this(id, model, null);
+    }
+
+    public StatelessAjaxFallbackLink(final String id, final IModel<T> model,
+            final PageParameters params) {
         super(id, model);
 
-        add(new AjaxEventBehavior("onclick") {
-            private static final long serialVersionUID = 1L;
+        add(new StatelessAjaxEventBehavior("onclick", params) {
+            private static final long serialVersionUID = -8445395501430605953L;
 
             @Override
             protected IAjaxCallDecorator getAjaxCallDecorator() {
                 return new CancelEventIfNoAjaxDecorator(
                         StatelessAjaxFallbackLink.this.getAjaxCallDecorator());
-            }
-
-            @Override
-            public boolean getStatelessHint(final Component component) {
-                return true;
             }
 
             @Override
@@ -60,6 +59,11 @@ public abstract class StatelessAjaxFallbackLink<T> extends Link<T> implements
                 onClick(target);
             }
         });
+    }
+
+    public StatelessAjaxFallbackLink(final String id,
+            final PageParameters params) {
+        this(id, null, params);
     }
 
     /**
