@@ -20,8 +20,8 @@ import org.apache.wicket.model.IModel;
  * @author jfk
  * 
  */
-public abstract class StatelessAjaxFallbackLink<T> extends Link<T> implements
-        IAjaxLink {
+public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
+        implements IAjaxLink {
     private static final long serialVersionUID = -133600842398684777L;
 
     public StatelessAjaxFallbackLink(final String id) {
@@ -34,7 +34,7 @@ public abstract class StatelessAjaxFallbackLink<T> extends Link<T> implements
 
     public StatelessAjaxFallbackLink(final String id, final IModel<T> model,
             final PageParameters params) {
-        super(id, model);
+        super(id, model, params);
 
         add(new StatelessAjaxEventBehavior("onclick", params) {
             private static final long serialVersionUID = -8445395501430605953L;
@@ -72,17 +72,6 @@ public abstract class StatelessAjaxFallbackLink<T> extends Link<T> implements
      */
     protected IAjaxCallDecorator getAjaxCallDecorator() {
         return null;
-    }
-
-    /**
-     * Hints that this component is stateless.
-     * 
-     * @return always {@literal true}
-     * @see Link#getStatelessHint()
-     */
-    @Override
-    protected boolean getStatelessHint() {
-        return true;
     }
 
     /**
