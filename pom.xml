@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>superpom</artifactId>
     <groupId>com.google.code.joliratools</groupId>
@@ -9,7 +8,7 @@
   <groupId>com.google.code.joliratools</groupId>
   <artifactId>wicket-stateless</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>wicket-stateless</name>
   <description>Stateless Apache Wicket Components</description>
   <licenses>
@@ -120,4 +119,10 @@
     <wicket.version>1.4.5</wicket.version>
     <jetty.version>6.1.4</jetty.version>
   </properties>
+
+  <scm>
+    <connection>scm:svn:http://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-1.0.0</connection>
+    <developerConnection>scm:svn:https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-1.0.0</developerConnection>
+    <url>http://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-1.0.0</url>
+  </scm>
 </project>
