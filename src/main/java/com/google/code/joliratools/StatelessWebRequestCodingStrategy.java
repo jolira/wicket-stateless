@@ -149,8 +149,7 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
         final PageParameters params = new PageParameters(_params);
         final Page page = getPage(encoded[0], cycle, params);
         final String componentPath = getComponentPath(encoded);
-        final Component component = getComponent(page,
-                componentPath);
+        final Component component = getComponent(page, componentPath);
         final RequestListenerInterface listenerInterface = getInterface(encoded[2]);
 
         requestParameters.setBehaviorId(encoded[1]);
@@ -172,9 +171,9 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
     protected CharSequence encode(final RequestCycle requestCycle,
             final IListenerInterfaceRequestTarget requestTarget) {
         final Component component = requestTarget.getTarget();
-        final boolean stateless = component.isStateless();
 
-        if (!stateless) {
+        if (!(requestTarget instanceof BehaviorRequestTarget)
+                || !component.isStateless()) {
             return super.encode(requestCycle, requestTarget);
         }
 
