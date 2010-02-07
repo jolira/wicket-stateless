@@ -8,7 +8,7 @@
   <groupId>com.google.code.joliratools</groupId>
   <artifactId>wicket-stateless</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.0.3</version>
   <name>wicket-stateless</name>
   <description>Stateless Apache Wicket Components</description>
   <licenses>
@@ -119,4 +119,10 @@
     <wicket.version>1.4.5</wicket.version>
     <jetty.version>6.1.4</jetty.version>
   </properties>
+
+  <scm>
+    <connection>scm:svn:https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-1.0.3</connection>
+    <developerConnection>scm:svn:https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-1.0.3</developerConnection>
+    <url>https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-1.0.3</url>
+  </scm>
 </project>
