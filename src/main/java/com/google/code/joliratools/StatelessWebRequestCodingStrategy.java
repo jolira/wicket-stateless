@@ -84,6 +84,9 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
                     + STATELESS_PARAMETER_NAME);
         }
 
+        // Should not be visible downstream, so remove it
+        _params.remove(STATELESS_PARAMETER_NAME);
+
         final String[] split = encoded[0].split(Character
                 .toString(PATH_SEPARATOR));
 
