@@ -3,7 +3,7 @@
  */
 package com.google.code.joliratools;
 
-import static com.google.code.joliratools.StatlessEncoder.appendParameters;
+import static com.google.code.joliratools.StatelessEncoder.appendParameters;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.link.Link;
