@@ -8,7 +8,7 @@
   <groupId>com.google.code.joliratools</groupId>
   <artifactId>wicket-stateless-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.4</version>
+  <version>1.0.5-SNAPSHOT</version>
   <name>Wicket Stateless Parent</name>
   <description>Stateless Apache Wicket Components &amp; Demo</description>
   <licenses>
@@ -28,12 +28,6 @@
     </modules>
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.7</version>
-        <scope>test</scope>
-      </dependency>
       <dependency>
         <groupId>org.apache.wicket</groupId>
         <artifactId>wicket</artifactId>
@@ -128,10 +122,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <scm>
-    <connection>scm:svn:https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-parent-1.0.4</connection>
-    <developerConnection>scm:svn:https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-parent-1.0.4</developerConnection>
-    <url>https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-parent-1.0.4</url>
-  </scm>
 </project>
