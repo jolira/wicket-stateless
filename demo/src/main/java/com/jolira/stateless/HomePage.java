@@ -36,7 +36,6 @@ public class HomePage extends WebPage {
             @Override
             public void onClick(final AjaxRequestTarget target) {
                 if (target != null) {
-                    setPageParameters(updated);
                     target.addComponent(c2);
                 }
             }
