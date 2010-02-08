@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>superpom</artifactId>
     <groupId>com.google.code.joliratools</groupId>
@@ -9,7 +8,7 @@
   <groupId>com.google.code.joliratools</groupId>
   <artifactId>wicket-stateless-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.4-SNAPSHOT</version>
+  <version>1.0.4</version>
   <name>Wicket Stateless Parent</name>
   <description>Stateless Apache Wicket Components &amp; Demo</description>
   <licenses>
@@ -30,6 +29,12 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.7</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>org.apache.wicket</groupId>
         <artifactId>wicket</artifactId>
         <version>${wicket.version}</version>
@@ -40,7 +45,7 @@
         <version>4.7</version>
         <scope>test</scope>
       </dependency>
-
+      
       <!-- LOGGING DEPENDENCIES -->
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -123,4 +128,10 @@
       </plugin>
     </plugins>
   </build>
+
+  <scm>
+    <connection>scm:svn:https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-parent-1.0.4</connection>
+    <developerConnection>scm:svn:https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-parent-1.0.4</developerConnection>
+    <url>https://jolira-tools.googlecode.com/svn/superpom/tags/wicket-stateless-parent-1.0.4</url>
+  </scm>
 </project>
