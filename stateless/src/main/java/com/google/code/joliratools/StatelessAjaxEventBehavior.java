@@ -12,12 +12,9 @@ import org.apache.wicket.behavior.AbstractAjaxBehavior;
 
 abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior {
     private static final long serialVersionUID = 2387070289758596955L;
-    private final PageParameters params;
 
-    StatelessAjaxEventBehavior(final String event, final PageParameters params) {
+    StatelessAjaxEventBehavior(final String event) {
         super(event);
-
-        this.params = params;
     }
 
     /**
@@ -31,9 +28,12 @@ abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior {
     @Override
     public CharSequence getCallbackUrl(final boolean onlyTargetActivePage) {
         final CharSequence url = super.getCallbackUrl(onlyTargetActivePage);
+        final PageParameters params = getPageParameters();
 
         return appendParameters(url, params);
     }
+
+    protected abstract PageParameters getPageParameters();
 
     /**
      * @return always {@literal true}

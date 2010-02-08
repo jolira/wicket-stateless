@@ -28,21 +28,24 @@ public class HomePage extends WebPage {
         final String _counter = getParameter(parameters, COUNTER_PARAM);
         final int counter = _counter != null ? Integer.parseInt(_counter) : 0;
         final Label c2 = new Label("c2", Integer.toString(counter));
-        final PageParameters updatedParameters = new PageParameters();
-
-        updatedParameters.put(COUNTER_PARAM, Integer.toString(counter + 1));
-
+        final PageParameters updated = updateParams(counter);
         final Link<?> c2Link = new StatelessAjaxFallbackLink<Void>("c2-link",
-                null, updatedParameters) {
+                null, updated) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick(final AjaxRequestTarget target) {
                 if (target != null) {
-                    target.addComponent(c2, "c2");
+                    setPageParameters(updated);
+                    target.addComponent(c2);
                 }
             }
         };
+
+        c2.setMarkupId("c2"); // Required to make stateless Ajax work
+        c2.setOutputMarkupId(true);
+        add(c2Link);
+        add(c2);
 
         final String _a = getParameter(parameters, "a");
         final String _b = getParameter(parameters, "b");
@@ -52,12 +55,9 @@ public class HomePage extends WebPage {
         final TextField<String> b = new TextField<String>("b",
                 new Model<String>(_b));
 
-        a.setRequired(true);
         form.add(a);
         form.add(b);
         add(form);
-        add(c2Link);
-        add(c2);
     }
 
     private String getParameter(final PageParameters parameters,
@@ -69,5 +69,12 @@ public class HomePage extends WebPage {
         }
 
         return value[0];
+    }
+
+    protected final PageParameters updateParams(final int counter) {
+        final PageParameters updatedParameters = new PageParameters();
+
+        updatedParameters.put(COUNTER_PARAM, Integer.toString(counter + 1));
+        return updatedParameters;
     }
 }

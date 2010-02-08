@@ -15,7 +15,7 @@ import org.apache.wicket.model.IModel;
  */
 public abstract class StatelessLink<T> extends Link<T> {
     private static final long serialVersionUID = 397549666360107292L;
-    private final PageParameters params;
+    private PageParameters params;
 
     public StatelessLink(final String id) {
         this(id, null, null);
@@ -28,8 +28,13 @@ public abstract class StatelessLink<T> extends Link<T> {
     public StatelessLink(final String id, final IModel<T> model,
             final PageParameters params) {
         super(id, model);
+        setMarkupId(id);
 
         this.params = params;
+    }
+
+    protected final PageParameters getPageParameters() {
+        return params;
     }
 
     /**
@@ -54,5 +59,9 @@ public abstract class StatelessLink<T> extends Link<T> {
         final CharSequence url = super.getURL();
 
         return appendParameters(url, params);
+    }
+
+    protected void setPageParameters(final PageParameters params) {
+        this.params = params;
     }
 }

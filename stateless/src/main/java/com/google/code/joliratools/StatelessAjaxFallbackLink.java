@@ -36,13 +36,18 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
             final PageParameters params) {
         super(id, model, params);
 
-        add(new StatelessAjaxEventBehavior("onclick", params) {
+        add(new StatelessAjaxEventBehavior("onclick") {
             private static final long serialVersionUID = -8445395501430605953L;
 
             @Override
             protected IAjaxCallDecorator getAjaxCallDecorator() {
                 return new CancelEventIfNoAjaxDecorator(
                         StatelessAjaxFallbackLink.this.getAjaxCallDecorator());
+            }
+
+            @Override
+            protected PageParameters getPageParameters() {
+                return StatelessAjaxFallbackLink.this.getPageParameters();
             }
 
             @Override
@@ -57,6 +62,7 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
             @Override
             protected void onEvent(final AjaxRequestTarget target) {
                 onClick(target);
+                target.addComponent(StatelessAjaxFallbackLink.this);
             }
         });
     }
