@@ -41,7 +41,7 @@ public class HomePage extends WebPage {
             }
         };
 
-        c2.setMarkupId("c2"); // Required to make stateless Ajax work
+        c2.setMarkupId(c2.getId()); // Required to make stateless Ajax work
         c2.setOutputMarkupId(true);
         add(c2Link);
         add(c2);
