@@ -1,9 +1,12 @@
 package com.jolira.stateless;
 
+import java.util.Arrays;
+
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
@@ -11,6 +14,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.Model;
 
 import com.google.code.joliratools.StatelessAjaxFallbackLink;
+import com.google.code.joliratools.StatelessAjaxFormComponentUpdatingBehavior;
 
 /**
  * For testing only
@@ -53,10 +57,31 @@ public class HomePage extends WebPage {
                 new Model<String>(_a));
         final TextField<String> b = new TextField<String>("b",
                 new Model<String>(_b));
+        final DropDownChoice<String> c = new DropDownChoice<String>("c",
+                new Model<String>("2"), Arrays.asList(new String[] { "1", "2",
+                        "3" }));
 
+        c.add(new StatelessAjaxFormComponentUpdatingBehavior("onchange") {
+            private static final long serialVersionUID = 3837958099817895568L;
+
+            @Override
+            protected PageParameters getPageParameters() {
+                return new PageParameters();
+            }
+
+            @Override
+            protected void onUpdate(final AjaxRequestTarget target) {
+                final String value = c.getModelObject();
+                System.out.println("xxxxxxxxxxxxxxxxxx: " + value);
+                setResponsePage(HomePage.class);
+            }
+        });
+        c.setMarkupId("c");
         form.add(a);
         form.add(b);
         add(form);
+
+        add(c);
     }
 
     private String getParameter(final PageParameters parameters,
