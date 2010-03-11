@@ -52,7 +52,15 @@ public class HomePage extends WebPage {
 
         final String _a = getParameter(parameters, "a");
         final String _b = getParameter(parameters, "b");
-        final Form<String> form = new StatelessForm<String>("inputForm");
+        final Form<String> form = new StatelessForm<String>("inputForm") {
+            private static final long serialVersionUID = -1804691502079814185L;
+
+            @Override
+            protected void onSubmit() {
+                info("clicked sumbit");
+            }
+
+        };
         final TextField<String> a = new TextField<String>("a",
                 new Model<String>(_a));
         final TextField<String> b = new TextField<String>("b",

@@ -12,17 +12,19 @@ import com.google.code.joliratools.StatelessWebRequestCycleProcessor;
  * @see com.jolira.stateless.Start#main(String[])
  */
 public class WicketApplication extends WebApplication {
-    /**
-     * @see org.apache.wicket.Application#getHomePage()
-     */
     @Override
     public Class<HomePage> getHomePage() {
         return HomePage.class;
     }
 
     @Override
+    protected void init() {
+        mountBookmarkablePage("home", HomePage.class);
+    }
+
+    @Override
     protected IRequestCycleProcessor newRequestCycleProcessor() {
-        return new StatelessWebRequestCycleProcessor();
+      return new StatelessWebRequestCycleProcessor();
     }
 
 }
