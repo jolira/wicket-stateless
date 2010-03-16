@@ -2,6 +2,7 @@ package com.jolira.stateless;
 
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.IRequestCycleProcessor;
+import org.apache.wicket.request.target.coding.QueryStringUrlCodingStrategy;
 
 import com.google.code.joliratools.StatelessWebRequestCycleProcessor;
 
@@ -19,12 +20,14 @@ public class WicketApplication extends WebApplication {
 
     @Override
     protected void init() {
-        mountBookmarkablePage("home", HomePage.class);
+        // See https://issues.apache.org/jira/browse/WICKET-2774
+        // mountBookmarkablePage("home", HomePage.class);
+        mount(new QueryStringUrlCodingStrategy("home", HomePage.class));
     }
 
     @Override
     protected IRequestCycleProcessor newRequestCycleProcessor() {
-      return new StatelessWebRequestCycleProcessor();
+        return new StatelessWebRequestCycleProcessor();
     }
 
 }
