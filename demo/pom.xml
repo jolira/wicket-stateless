@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.google.code.joliratools</groupId>
+    <groupId>com.jolira</groupId>
     <artifactId>wicket-stateless-parent</artifactId>
     <version>1.0.6-SNAPSHOT</version>
   </parent>
@@ -16,7 +16,7 @@
       <version>${wicket.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.google.code.joliratools</groupId>
+      <groupId>com.jolira</groupId>
       <artifactId>wicket-stateless</artifactId>
       <version>${project.version}</version>
     </dependency>
