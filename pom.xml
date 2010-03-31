@@ -2,7 +2,7 @@
   <parent>
     <artifactId>superpom</artifactId>
     <groupId>com.jolira</groupId>
-    <version>1.0.5</version>
+    <version>1.0.7</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.jolira</groupId>
@@ -10,7 +10,7 @@
   <packaging>pom</packaging>
   <version>1.0.6-SNAPSHOT</version>
   <name>Wicket Stateless Parent</name>
-  <description>Stateless Apache Wicket Components &amp; Demo</description>
+  <description>Components for Apache Wicket useful for Stateless Applications</description>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -18,10 +18,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <properties>
-    <wicket.version>1.4.6</wicket.version>
-    <jetty.version>6.1.4</jetty.version>
-  </properties>
     <modules>
         <module>stateless</module>
         <module>demo</module>
