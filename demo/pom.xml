@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.jolira</groupId>
     <artifactId>wicket-stateless-parent</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8-SNAPSHOT</version>
   </parent>
   <artifactId>stateless-demo</artifactId>
   <packaging>war</packaging>
