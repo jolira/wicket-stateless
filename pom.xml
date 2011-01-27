@@ -2,7 +2,7 @@
   <parent>
     <artifactId>superpom</artifactId>
     <groupId>com.jolira</groupId>
-    <version>1.0.7</version>
+    <version>1.1.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.jolira</groupId>
@@ -11,6 +11,10 @@
   <version>1.0.9-SNAPSHOT</version>
   <name>Wicket Stateless Parent</name>
   <description>Components for Apache Wicket useful for Stateless Applications</description>
+  <properties>
+    <wicket.version>1.4.14</wicket.version>
+    <slf4j.version>1.5.8</slf4j.version>
+  </properties>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -32,32 +36,32 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.7</version>
+        <version>4.8.1</version>
         <scope>test</scope>
       </dependency>
-      
+
       <!-- LOGGING DEPENDENCIES -->
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-jdk14</artifactId>
-        <version>1.5.8</version>
+        <version>${slf4j.version}</version>
       </dependency>
 
       <!--  JETTY DEPENDENCIES FOR TESTING  -->
       <dependency>
-        <groupId>org.mortbay.jetty</groupId>
+        <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty</artifactId>
         <version>${jetty.version}</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>org.mortbay.jetty</groupId>
+        <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-util</artifactId>
         <version>${jetty.version}</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>org.mortbay.jetty</groupId>
+        <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-management</artifactId>
         <version>${jetty.version}</version>
         <scope>provided</scope>
