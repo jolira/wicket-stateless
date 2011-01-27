@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.google.code.joliratools;
 
@@ -37,26 +37,36 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
      */
     public static final String STATELESS_PARAMETER_NAME = "jolira:stateless";
 
-    private static Component getComponent(final Page page,
-            final String componentPath) {
-        final String pageRelativeComponentPath = Strings
-                .afterFirstPathComponent(componentPath, PATH_SEPARATOR);
+    private static Component getComponent(final Page page, final String componentPath) {
+        final String pageRelativeComponentPath = Strings.afterFirstPathComponent(componentPath, PATH_SEPARATOR);
         final Component component = page.get(pageRelativeComponentPath);
+
+        if (component != null) {
+            return component;
+        }
+
+        if (!(page instanceof StatelessPage)) {
+            throw new WicketRuntimeException("unable to find component with path " + pageRelativeComponentPath
+                    + " on stateless page " + page
+                    + "; Please implement the StatlessPage interface and make Component#onBeforeRender() public");
+        }
+
+        final StatelessPage stateless = (StatelessPage) page;
+
+        stateless.onBeforeRender();
+
+        final Component c = page.get(pageRelativeComponentPath);
 
         // See {@link
         // BookmarkableListenerInterfaceRequestTarget#processEvents(RequestCycle)}
         // We make have to try to look for the component twice, if we hit the
         // same condition.
-        if (component == null) {
-            throw new WicketRuntimeException(
-                    "unable to find component with path "
-                            + pageRelativeComponentPath
-                            + " on stateless page "
-                            + page
-                            + " it could be that the component is inside a repeater make your component return false in getStatelessHint()");
+        if (c == null) {
+            throw new WicketRuntimeException("unable to find component with path " + pageRelativeComponentPath
+                    + " on stateless page " + page + "even after calling onBeforeRender");
         }
 
-        return component;
+        return c;
     }
 
     private static String getComponentPath(final String[] encoded) {
@@ -76,41 +86,33 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
     }
 
     private static String[] getEncodedParams(final Map<String, ?> _params) {
-        final String[] encoded = (String[]) _params
-                .get(STATELESS_PARAMETER_NAME);
+        final String[] encoded = (String[]) _params.get(STATELESS_PARAMETER_NAME);
 
         if (encoded == null) {
-            throw new WicketRuntimeException("No value found for "
-                    + STATELESS_PARAMETER_NAME);
+            throw new WicketRuntimeException("No value found for " + STATELESS_PARAMETER_NAME);
         }
 
         // Should not be visible downstream, so remove it
         _params.remove(STATELESS_PARAMETER_NAME);
 
-        final String[] split = encoded[0].split(Character
-                .toString(PATH_SEPARATOR));
+        final String[] split = encoded[0].split(Character.toString(PATH_SEPARATOR));
 
         if (split.length < PARAM_COUNT) {
-            throw new WicketRuntimeException("Invalid value found for "
-                    + STATELESS_PARAMETER_NAME);
+            throw new WicketRuntimeException("Invalid value found for " + STATELESS_PARAMETER_NAME);
         }
         return split;
     }
 
-    private static RequestListenerInterface getInterface(
-            final String interfaceName) {
-        final RequestListenerInterface listenerInterface = RequestListenerInterface
-                .forName(interfaceName);
+    private static RequestListenerInterface getInterface(final String interfaceName) {
+        final RequestListenerInterface listenerInterface = RequestListenerInterface.forName(interfaceName);
 
         if (listenerInterface == null) {
-            throw new WicketRuntimeException(
-                    "unable to find listener interface " + interfaceName);
+            throw new WicketRuntimeException("unable to find listener interface " + interfaceName);
         }
         return listenerInterface;
     }
 
-    private static Page getPage(final String pageName,
-            final RequestCycle cycle, final PageParameters params) {
+    private static Page getPage(final String pageName, final RequestCycle cycle, final PageParameters params) {
         final Session session = cycle.getSession();
         final Class<? extends Page> pageClass = getPageClass(session, pageName);
 
@@ -118,27 +120,22 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
     }
 
     @SuppressWarnings("unchecked")
-    private static Class<? extends Page> getPageClass(final Session session,
-            final String clsName) {
+    private static Class<? extends Page> getPageClass(final Session session, final String clsName) {
         try {
-            return (Class<? extends Page>) session.getClassResolver()
-                    .resolveClass(clsName);
+            return (Class<? extends Page>) session.getClassResolver().resolveClass(clsName);
         } catch (final ClassNotFoundException e) {
-            throw new WicketRuntimeException(
-                    "Unable to load Bookmarkable Page", e);
+            throw new WicketRuntimeException("Unable to load Bookmarkable Page", e);
         }
     }
 
-    private static <C extends Page> Page newPage(final Class<C> pageClass,
-            final RequestCycle cycle, final PageParameters pageParameters) {
+    private static <C extends Page> Page newPage(final Class<C> pageClass, final RequestCycle cycle,
+            final PageParameters pageParameters) {
         final Application app = Application.get();
         final ISessionSettings settings = app.getSessionSettings();
         final IPageFactory pageFactory = settings.getPageFactory();
 
-        final Map<String, String[]> requestMap = cycle.getRequest()
-                .getParameterMap();
-        final Map<String, String[]> reqParams = pageParameters
-                .toRequestParameters();
+        final Map<String, String[]> requestMap = cycle.getRequest().getParameterMap();
+        final Map<String, String[]> reqParams = pageParameters.toRequestParameters();
 
         requestMap.putAll(reqParams);
 
@@ -157,8 +154,7 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
 
         requestParameters.setBehaviorId(encoded[1]);
 
-        return new BehaviorRequestTarget(page, component, listenerInterface,
-                requestParameters);
+        return new BehaviorRequestTarget(page, component, listenerInterface, requestParameters);
     }
 
     /**
@@ -171,12 +167,10 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
      * @return the encoded url
      */
     @Override
-    protected CharSequence encode(final RequestCycle requestCycle,
-            final IListenerInterfaceRequestTarget requestTarget) {
+    protected CharSequence encode(final RequestCycle requestCycle, final IListenerInterfaceRequestTarget requestTarget) {
         final Component component = requestTarget.getTarget();
 
-        if (!(requestTarget instanceof BehaviorRequestTarget)
-                || !component.isStateless()) {
+        if (!(requestTarget instanceof BehaviorRequestTarget) || !component.isStateless()) {
             return super.encode(requestCycle, requestTarget);
         }
 
@@ -208,8 +202,7 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
         url.append(Component.PATH_SEPARATOR);
 
         // Add listener interface
-        final RequestListenerInterface rli = requestTarget
-                .getRequestListenerInterface();
+        final RequestListenerInterface rli = requestTarget.getRequestListenerInterface();
         final String listenerName = rli.getName();
 
         url.append(listenerName);
@@ -228,14 +221,11 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
      * @see IRequestTargetMounter#urlCodingStrategyForPath(java.lang.String)
      */
     @Override
-    public IRequestTargetUrlCodingStrategy urlCodingStrategyForPath(
-            final String path) {
+    public IRequestTargetUrlCodingStrategy urlCodingStrategyForPath(final String path) {
         if (path != null && path.endsWith(STATELESS_PARAMETER_NAME)) {
             return new IRequestTargetUrlCodingStrategy() {
-                public IRequestTarget decode(
-                        final RequestParameters requestParameters) {
-                    return StatelessWebRequestCodingStrategy.this
-                            .decode(requestParameters);
+                public IRequestTarget decode(final RequestParameters requestParameters) {
+                    return StatelessWebRequestCodingStrategy.this.decode(requestParameters);
                 }
 
                 public CharSequence encode(final IRequestTarget requestTarget) {
@@ -250,9 +240,7 @@ public class StatelessWebRequestCodingStrategy extends WebRequestCodingStrategy 
                     throw new UnsupportedOperationException();
                 }
 
-                public boolean matches(
-                        @SuppressWarnings("hiding") final String path,
-                        final boolean caseSensitive) {
+                public boolean matches(@SuppressWarnings("hiding") final String path, final boolean caseSensitive) {
                     throw new UnsupportedOperationException();
                 }
             };
