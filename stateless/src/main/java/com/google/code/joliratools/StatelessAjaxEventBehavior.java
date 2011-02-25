@@ -11,11 +11,11 @@ import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior {
+public abstract class StatelessAjaxEventBehavior extends AjaxEventBehavior {
 	
     private static final long serialVersionUID = 2387070289758596955L;
 
-    StatelessAjaxEventBehavior(final String event) {
+    public StatelessAjaxEventBehavior(final String event) {
         super(event);
     }
 
