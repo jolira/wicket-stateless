@@ -33,7 +33,7 @@ public abstract class StatelessAjaxFormComponentUpdatingBehavior
      * currently is lacking a way to pass the parameters to that class.
      * 
      * 
-     * @see AbstractAjaxBehavior#getCallbackUrl(boolean)
+     * @see AbstractAjaxBehavior#getCallbackUrl()
      */
     @Override
     public CharSequence getCallbackUrl() {
