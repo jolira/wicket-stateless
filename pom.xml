@@ -24,7 +24,6 @@
   </licenses>
     <modules>
         <module>stateless</module>
-        <module>demo</module>
     </modules>
   <dependencyManagement>
     <dependencies>
