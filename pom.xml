@@ -8,7 +8,7 @@
   <groupId>com.jolira</groupId>
   <artifactId>wicket-stateless-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.12</version>
+  <version>1.0.13-SNAPSHOT</version>
   <name>Wicket Stateless Parent</name>
   <description>Components for Apache Wicket useful for Stateless Applications</description>
   <properties>
