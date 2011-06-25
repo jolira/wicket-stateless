@@ -12,8 +12,9 @@
   <name>Wicket Stateless Parent</name>
   <description>Components for Apache Wicket useful for Stateless Applications</description>
   <properties>
-    <wicket.version>1.4.17</wicket.version>
-    <slf4j.version>1.5.8</slf4j.version>
+    <wicket.version>1.5-RC5.1</wicket.version>
+    <slf4j.version>1.6.1</slf4j.version>
+    <jetty.version>7.2.2.v20101205</jetty.version>
   </properties>
   <licenses>
     <license>
@@ -29,7 +30,7 @@
     <dependencies>
       <dependency>
         <groupId>org.apache.wicket</groupId>
-        <artifactId>wicket</artifactId>
+        <artifactId>wicket-core</artifactId>
         <version>${wicket.version}</version>
       </dependency>
       <dependency>

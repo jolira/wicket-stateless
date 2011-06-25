@@ -4,7 +4,6 @@ package com.google.code.joliratools;
  * 
  */
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxCallDecorator;
 import org.apache.wicket.ajax.calldecorator.CancelEventIfNoAjaxDecorator;
@@ -13,6 +12,7 @@ import org.apache.wicket.ajax.markup.html.IAjaxLink;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Just like {@link AjaxFallbackLink}, but stateless.
@@ -22,6 +22,7 @@ import org.apache.wicket.model.IModel;
  */
 public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
         implements IAjaxLink {
+	
     private static final long serialVersionUID = -133600842398684777L;
 
     public StatelessAjaxFallbackLink(final String id) {
@@ -62,13 +63,12 @@ public abstract class StatelessAjaxFallbackLink<T> extends StatelessLink<T>
             @Override
             protected void onEvent(final AjaxRequestTarget target) {
                 onClick(target);
-                target.addComponent(StatelessAjaxFallbackLink.this);
+                target.add(StatelessAjaxFallbackLink.this);
             }
         });
     }
 
-    public StatelessAjaxFallbackLink(final String id,
-            final PageParameters params) {
+    public StatelessAjaxFallbackLink(final String id, final PageParameters params) {
         this(id, null, params);
     }
 

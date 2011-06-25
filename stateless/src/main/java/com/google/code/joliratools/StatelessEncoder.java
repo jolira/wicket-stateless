@@ -1,12 +1,13 @@
 package com.google.code.joliratools;
 
-import java.util.Map;
+import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.Map.Entry;
 
-import org.apache.wicket.PageParameters;
-import org.apache.wicket.request.target.coding.WebRequestEncoder;
-import org.apache.wicket.util.string.AppendingStringBuffer;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.request.UrlEncoder;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.mapper.parameter.PageParameters.NamedPair;
 
 /**
  * Centralize algorithms that are shared.
@@ -15,32 +16,46 @@ import org.apache.wicket.util.string.AppendingStringBuffer;
  * 
  */
 final class StatelessEncoder {
-    static CharSequence appendParameters(final CharSequence url,
-            final PageParameters params) {
-        if (params == null) {
+	
+	/**
+	 * Merges the query parameters of the url with the named parameters
+	 * from the {@link PageParameters}. The page parameters override the query
+	 * parameters.
+	 * 
+	 * @param url the url with the original parameters
+	 * @param params the page parameters to merge
+	 * @return an Url with merged parameters
+	 */
+    static Url mergeParameters(final Url url, final PageParameters params) {
+    
+    	if (params == null) {
             return url;
         }
 
-        final AppendingStringBuffer buf = new AppendingStringBuffer(url);
-        final WebRequestEncoder encoder = new WebRequestEncoder(buf);
-        final Map<String, String[]> rparams = params.toRequestParameters();
-        final Set<Entry<String, String[]>> entrySet = rparams.entrySet();
-
-        for (final Entry<String, String[]> entry : entrySet) {
-            final String key = entry.getKey();
-            final String[] value = entry.getValue();
-
-            if (value != null) {
-                for (final String val : value) {
-                    encoder.addValue(key, val);
-                }
-            }
-        }
-
-        return buf;
+    	Charset charset = url.getCharset();
+    	
+    	Url mergedUrl = Url.parse(url.toString(), charset);
+    	
+		UrlEncoder urlEncoder = UrlEncoder.QUERY_INSTANCE;
+    	
+		Set<String> setParameters = new HashSet<String>();
+		
+    	for (NamedPair pair : params.getAllNamed()) {
+    		String key = urlEncoder.encode(pair.getKey(), charset);
+    		String value = urlEncoder.encode(pair.getValue(), charset);
+    		
+    		if (setParameters.contains(key)) {
+    			mergedUrl.addQueryParameter(key, value);
+    		} else {
+    			mergedUrl.setQueryParameter(key, value);
+    			setParameters.add(key);
+    		}
+    	}
+    	
+    	return mergedUrl;
     }
 
     private StatelessEncoder() {
-        // nothing
+        // forbid instantiation
     }
 }

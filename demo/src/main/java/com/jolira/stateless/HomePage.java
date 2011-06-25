@@ -2,8 +2,8 @@ package com.jolira.stateless;
 
 import java.util.Arrays;
 
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.devutils.stateless.StatelessComponent;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -11,7 +11,10 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.StringValue;
 
 import com.google.code.joliratools.StatelessAjaxFallbackLink;
 import com.google.code.joliratools.StatelessAjaxFormComponentUpdatingBehavior;
@@ -19,8 +22,12 @@ import com.google.code.joliratools.StatelessAjaxFormComponentUpdatingBehavior;
 /**
  * For testing only
  */
+@StatelessComponent
 public class HomePage extends WebPage {
-    private static final String COUNTER_PARAM = "counter";
+    
+	private static final long serialVersionUID = 1L;
+	
+	private static final String COUNTER_PARAM = "counter";
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -29,18 +36,28 @@ public class HomePage extends WebPage {
      *            Page parameters
      */
     public HomePage(final PageParameters parameters) {
-        final String _counter = getParameter(parameters, COUNTER_PARAM);
-        final int counter = _counter != null ? Integer.parseInt(_counter) : 0;
-        final Label c2 = new Label("c2", Integer.toString(counter));
-        final PageParameters updated = updateParams(counter);
+        final Label c2 = new Label("c2", new AbstractReadOnlyModel<Integer>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Integer getObject() {
+				final String _counter = getParameter(parameters, COUNTER_PARAM);
+		        final int counter = _counter != null ? Integer.parseInt(_counter) : 0;
+		        return counter;
+			}
+        	
+        });
         final Link<?> c2Link = new StatelessAjaxFallbackLink<Void>("c2-link",
-                null, updated) {
+                null, parameters) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick(final AjaxRequestTarget target) {
                 if (target != null) {
-                    target.addComponent(c2);
+                	Integer counter = (Integer) c2.getDefaultModelObject();
+                	System.out.println("label: " + counter);
+                	updateParams(getPageParameters(), counter);
+                    target.add(c2);
                 }
             }
         };
@@ -57,7 +74,8 @@ public class HomePage extends WebPage {
 
             @Override
             protected void onSubmit() {
-                info("clicked sumbit");
+            	System.out.format("clicked sumbit: a = [%s], b = [%s]%n", 
+            			getParameter(parameters, "a"), getParameter(parameters, "b"));
             }
 
         };
@@ -81,7 +99,7 @@ public class HomePage extends WebPage {
             protected void onUpdate(final AjaxRequestTarget target) {
                 final String value = c.getModelObject();
                 System.out.println("xxxxxxxxxxxxxxxxxx: " + value);
-                setResponsePage(HomePage.class);
+//                setResponsePage(HomePage.class);
             }
         });
         c.setMarkupId("c");
@@ -94,19 +112,16 @@ public class HomePage extends WebPage {
 
     private String getParameter(final PageParameters parameters,
             final String key) {
-        final String[] value = (String[]) parameters.get(key);
+        final StringValue value = parameters.get(key);
 
-        if (value == null || value.length < 1) {
+        if (value.isNull() || value.isEmpty()) {
             return null;
         }
 
-        return value[0];
+        return value.toString();
     }
 
-    protected final PageParameters updateParams(final int counter) {
-        final PageParameters updatedParameters = new PageParameters();
-
-        updatedParameters.put(COUNTER_PARAM, Integer.toString(counter + 1));
-        return updatedParameters;
+    protected final void updateParams(final PageParameters pageParameters, final int counter) {
+        pageParameters.set(COUNTER_PARAM, Integer.toString(counter + 1));
     }
 }

@@ -7,9 +7,8 @@ import java.util.List;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.IRequestCycleProcessor;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.After;
 import org.junit.Before;
@@ -28,11 +27,6 @@ public class StatelessAjaxFallbackLinkTest {
             @Override
             public Class<? extends Page> getHomePage() {
                 return HomePage.class;
-            }
-
-            @Override
-            protected IRequestCycleProcessor newRequestCycleProcessor() {
-                return new StatelessWebRequestCycleProcessor();
             }
         });
 
@@ -64,7 +58,7 @@ public class StatelessAjaxFallbackLinkTest {
 
         l1.onClick();
 
-        final List<IBehavior> behaviors = l1.getBehaviors();
+        final List<? extends Behavior> behaviors = l1.getBehaviors();
         final AjaxEventBehavior behavior = (AjaxEventBehavior) behaviors.get(0);
 
         behavior.onRequest();
