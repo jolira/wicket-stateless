@@ -29,7 +29,7 @@ public class WicketApplication extends WebApplication {
 
 == ``HomePage.html`` ==
 
-``
+```html
 <html
   xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
 <head>
@@ -63,11 +63,11 @@ and the page should be stateless. )
 
 </body>
 </html>
-``
+```
 
 == ``HomePage.java`` ==
 
-``
+```java
 public class HomePage extends WebPage {
     private static final String COUNTER_PARAM = "counter";
 
@@ -153,14 +153,14 @@ public class HomePage extends WebPage {
         return updatedParameters;
     }
 }
-``
+```
 
 
 == Maven ==
 
 This component is available in [http://repo2.maven.org/maven2/com/jolira/ Maven Central]. Simply add the following lines of configuration to our `pom.xml`:
 
-``
+```xml
 <dependencies>
   <dependency>
     <groupId>com.jolira</groupId>
@@ -168,7 +168,7 @@ This component is available in [http://repo2.maven.org/maven2/com/jolira/ Maven 
     <version>1.0.8</version>
   </dependency>
 </dependencies>
-``
+```
 
 == Consider Using [http://code.google.com/p/jolira-tools/wiki/guicier gucier] ==
 
