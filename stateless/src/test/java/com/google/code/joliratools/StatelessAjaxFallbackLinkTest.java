@@ -1,6 +1,5 @@
 package com.google.code.joliratools;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -42,7 +41,7 @@ public class StatelessAjaxFallbackLinkTest {
     }
 
     /**
-     * Test method for {@link StatelessAjaxFallbackLinkTest#getStatelessHint()}.
+     * Test method for {@link StatelessAjaxFallbackLink#getStatelessHint()}.
      */
     @SuppressWarnings("unchecked")
     @Test
@@ -54,7 +53,6 @@ public class StatelessAjaxFallbackLinkTest {
                 .get(2);
 
         assertTrue(l1.isStateless());
-        assertNull(l1.getAjaxCallDecorator());
 
         l1.onClick();
 
@@ -65,7 +63,7 @@ public class StatelessAjaxFallbackLinkTest {
     }
 
     /**
-     * Test method for {@link StatelessAjaxFallbackLinkTest#getStatelessHint()}.
+     * Test method for {@link StatelessAjaxFallbackLink#getStatelessHint()}.
      */
     @Test
     public void testHomePage() {

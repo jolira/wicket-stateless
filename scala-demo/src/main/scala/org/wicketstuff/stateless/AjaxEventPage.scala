@@ -9,7 +9,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget
 /**
  * Demonstrates usage of StatelessAjaxEventBehavior
  */
-class AjaxEventPage(parameters: PageParameters) extends WebPage(parameters) {
+class AjaxEventPage(parameters: PageParameters)
+  extends WebPage(parameters) {
 
   List(1, 2).foreach(id => {
       val label = new Label("l" + id, "text")
@@ -17,13 +18,13 @@ class AjaxEventPage(parameters: PageParameters) extends WebPage(parameters) {
       label.setMarkupId(label.getId)
 
       // clicking on a label updates the model object of the other label
-      label.add(new StatelessAjaxEventBehavior("onclick") {
+      label.add(new StatelessAjaxEventBehavior("click") {
 
         override def onEvent(target: AjaxRequestTarget) {
-          var opposite = 0;
+          var opposite = 0
           id match {
-            case 1 => opposite = 2;
-            case 2 => opposite = 1;
+            case 1 => opposite = 2
+            case 2 => opposite = 1
           }
 
           val l = AjaxEventPage.this.get("l" + opposite)
@@ -31,7 +32,7 @@ class AjaxEventPage(parameters: PageParameters) extends WebPage(parameters) {
           target.add(l)
         }
 
-        override def getPageParameters() = {
+        override def getPageParameters = {
           AjaxEventPage.this.getPageParameters
         }
       })
@@ -43,7 +44,7 @@ class AjaxEventPage(parameters: PageParameters) extends WebPage(parameters) {
  * Holds the static counter
  */
 object Counter {
-  var c1 = 0;
+  var c1 = 0
 
   def ++() = { c1 = c1 + 1; c1 }
 }

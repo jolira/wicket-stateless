@@ -40,6 +40,8 @@ public class HomePage extends WebPage {
      *            Page parameters
      */
     public HomePage(final PageParameters parameters) {
+        super(parameters);
+
         final MarkupContainer list = new WebMarkupContainer("list");
         final List<String> data = getList();
         final ListView<String> listView = new ListView<String>("item", data) {

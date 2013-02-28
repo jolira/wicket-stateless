@@ -1,20 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <parent>
-    <artifactId>superpom</artifactId>
-    <groupId>com.jolira</groupId>
-    <version>1.1.4</version>
-  </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.jolira</groupId>
-  <artifactId>wicket-stateless-parent</artifactId>
+  <groupId>org.wicketstuff</groupId>
+  <artifactId>wicketstuff-stateless-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.5.1-SNAPSHOT</version>
-  <name>Wicket Stateless Parent</name>
+  <version>6.6.0-SNAPSHOT</version>
+  <name>WicketStuff Stateless Parent</name>
   <description>Components for Apache Wicket useful for Stateless Applications</description>
   <properties>
-    <wicket.version>1.5-RC5.1</wicket.version>
-    <slf4j.version>1.6.1</slf4j.version>
-    <jetty.version>7.2.2.v20101205</jetty.version>
+    <wicket.version>6.6.0</wicket.version>
+    <slf4j.version>1.7.2</slf4j.version>
+    <jetty.version>7.6.9.v20130131</jetty.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <licenses>
     <license>
@@ -25,6 +21,8 @@
   </licenses>
     <modules>
         <module>stateless</module>
+        <module>scala-demo</module>
+        <module>demo</module>
     </modules>
   <dependencyManagement>
     <dependencies>
@@ -36,14 +34,14 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.8.2</version>
+        <version>4.11</version>
         <scope>test</scope>
       </dependency>
 
       <!-- LOGGING DEPENDENCIES -->
       <dependency>
         <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-jdk14</artifactId>
+        <artifactId>slf4j-simple</artifactId>
         <version>${slf4j.version}</version>
       </dependency>
 
@@ -102,18 +100,14 @@
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>1.6</source>
+          <target>1.6</target>
           <optimize>true</optimize>
           <debug>true</debug>
         </configuration>
       </plugin>
     </plugins>
   </build>
-  <scm>
-    <connection>scm:git:git@github.com:jolira/wicket-stateless.git</connection>
-    <developerConnection>scm:git:git@github.com:jolira/wicket-stateless.git</developerConnection>
-    <url>https://github.com/jolira/jofilter</url>
-  </scm>
 </project>

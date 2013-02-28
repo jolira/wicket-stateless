@@ -18,7 +18,7 @@ public class StatelessEncoderTest {
 
     /**
      * Test method for
-     * {@link StatelessEncoder#mergeParameters(CharSequence, PageParameters)}.
+     * {@link StatelessEncoder#mergeParameters(Url, PageParameters)}.
      */
     @Test
     public void testAppendnULLParameters() {
@@ -30,7 +30,7 @@ public class StatelessEncoderTest {
 
     /**
      * Test method for
-     * {@link StatelessEncoder#mergeParameters(CharSequence, PageParameters)}.
+     * {@link StatelessEncoder#mergeParameters(Url, PageParameters)}.
      */
     @Test
     public void testAppendParameters() {
@@ -46,18 +46,18 @@ public class StatelessEncoderTest {
         // XXX compares Map content vs. its toString(). Improve the assertion!
         assertEquals(Url.parse("?test1=val1&test2=val2&test2=val3"), encoded);
     }
-    
+
     @Test
     public void overrideOriginalParameter() {
-    	
-    	Url originalUrl = Url.parse("./home?0-1.ILinkListener-c2--link&test2=original");
+
+        Url originalUrl = Url.parse("./home?0-1.ILinkListener-c2--link&test2=original");
 
         final PageParameters params = new PageParameters();
         params.add("test1", "value1");
         params.add("test2", new String[] { "val2", "val3" });
 
-    	Url mergedParameters = StatelessEncoder.mergeParameters(originalUrl, params);
-    	
-    	assertEquals(Url.parse("./home?0-1.ILinkListener-c2--link&test1=value1&test2=val2&test2=val3"), mergedParameters);
+        Url mergedParameters = StatelessEncoder.mergeParameters(originalUrl, params);
+
+        assertEquals(Url.parse("./home?0-1.ILinkListener-c2--link&test1=value1&test2=val2&test2=val3"), mergedParameters);
     }
 }

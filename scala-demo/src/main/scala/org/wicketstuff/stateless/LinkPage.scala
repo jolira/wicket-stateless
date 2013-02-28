@@ -8,7 +8,8 @@ import org.apache.wicket.model.Model
 /**
  * A page that shows usage of StatelessLink
  */
-class LinkPage(parameters: PageParameters) extends WebPage(parameters) {
+class LinkPage(parameters: PageParameters)
+  extends WebPage(parameters) {
 
   val link = new StatelessLink("link", Model.of("Empty"), parameters) {
 
