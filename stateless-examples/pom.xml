@@ -8,26 +8,40 @@
         <version>6.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>wicketstuff-stateless</artifactId>
-    <packaging>jar</packaging>
-    <name>WicketStuff Stateless</name>
-    <description>Stateless Apache Wicket Components</description>
+    <artifactId>wicketstuff-stateless-examples</artifactId>
+    <packaging>war</packaging>
+    <name>WicketStuff Stateless Examples</name>
     <dependencies>
+
+        <!-- WICKET DEPENDENCIES -->
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-devutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-stateless</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+
+        <!-- LOGGING DEPENDENCIES -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <groupId>org.eclipse.jetty.aggregate</groupId>
+            <artifactId>jetty-all-server</artifactId>
         </dependency>
-    </dependencies>
+
+  </dependencies>
 </project>
